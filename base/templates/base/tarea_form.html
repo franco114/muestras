@@ -1,0 +1,29 @@
+{% extends "base/principal.html" %}
+{% block content %}
+<div class="barra-superior">
+    <a href="{% url "tareas" %}">&#x1F81C;Volver</a>
+</div>
+<div class="cuerpo-tarjeta">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if user in user_muestreo and tarea.medicion_completa %} 
+            <a>Ya se midió esta muestra</a><p></p>
+        {% elif user in user_muestreo %}
+            <a>Muestra obtenida {{ form.completo }}</a><p></p>
+            <a>Fecha de recolección {{ form.fecha }}</a><p></p>
+            <input class="button" type="submit" value="Enviar">
+        {% endif %}
+        {% if user in user_mediciones %}
+            <a>Muestra obtenida {{ form.completo }}</a><p></p>
+            <a>Fecha de recolección {{ form.fecha }}</a><p></p>
+            <a>Muestra medida {{ form.medicion_completa }}</a><p></p>
+            <a>Fecha de medición {{ form.fecha_medicion }}</a>
+
+            <input class="button" type="submit" value="Enviar">
+        {% endif %}
+        {% if user in user_visita %}
+            <a>No tienes acceso a la edición de muestras</a><p></p>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}
